@@ -20,19 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         telemetry = new DingiTelemetry(this , "EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2" , this);
-
-
-        ArrayList<Event> batch = new ArrayList<>();
-
-
-        AppUserTurnstile turnstileEvent = new AppUserTurnstile("Dingi",
-                "1.0");
-        AppUserTurnstile appUserTurnstile = new AppUserTurnstile("Dingi" , "1.0");
-        batch.add(turnstileEvent);
-        telemetry.sendEvents(batch);
 
     }
 }
