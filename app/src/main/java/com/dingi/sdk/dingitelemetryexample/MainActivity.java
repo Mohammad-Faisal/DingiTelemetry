@@ -13,14 +13,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private DingiTelemetry telemetry;
-    //private LocationTracker locationTracker;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        telemetry = new DingiTelemetry(this , "EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2" , this);
+        telemetry = new DingiTelemetry(getApplicationContext() , "EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2" , this);
 
     }
 }

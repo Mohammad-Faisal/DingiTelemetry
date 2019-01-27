@@ -1,6 +1,8 @@
 package com.dingi.sdk.dingitelemetry;
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +12,7 @@ import java.util.List;
 
 import br.com.safety.locationlistenerhelper.core.CurrentLocationListener;
 import br.com.safety.locationlistenerhelper.core.CurrentLocationReceiver;
+import br.com.safety.locationlistenerhelper.core.LocationService;
 import br.com.safety.locationlistenerhelper.core.LocationTracker;
 import okhttp3.OkHttpClient;
 
@@ -22,8 +25,11 @@ public class DingiTelemetry {
     private ConfigurationClient configurationClient;
     private AppCompatActivity activity;
 
+    private DingiTelemetryService dingiTelemetryService;
     private LocationTracker locationTracker;
+    Intent mServiceIntent;
 
+    ArrayList<Event> batch = new ArrayList<>();
     public DingiTelemetry(Context context  , String accessToken , AppCompatActivity activity){
         this.context = context;
         this.accessToken = accessToken;
@@ -32,8 +38,27 @@ public class DingiTelemetry {
                 context), accessToken, new OkHttpClient());
         this.certificateBlacklist = new CertificateBlacklist(context, configurationClient);
         this.activity = activity;
-        sendLocationEvent();
+
         sendTurnstileEvent();
+
+
+        //starting the service
+
+        //startTelemetryService(context,activity);
+        sendLocationEvent();
+
+
+
+    }
+
+    public void startTelemetryService(Context  context , AppCompatActivity appCompatActivity){
+        dingiTelemetryService = new DingiTelemetryService(context , appCompatActivity);
+
+        mServiceIntent = new Intent(context, DingiTelemetryService.class);
+        if (!isMyServiceRunning(DingiTelemetryService.class)) {
+            Log.d("Dingi", "service is started");
+            context.startService(mServiceIntent);
+        }
     }
 
 
@@ -57,8 +82,10 @@ public class DingiTelemetry {
 
 
     private void sendLocationEvent(){
+
+
         locationTracker=new LocationTracker("my.action")
-                .setInterval(50000)
+                .setInterval(5000)
                 .setGps(true)
                 .setNetWork(false)
                 //IF YOU WANT JUST CURRENT LOCATION
@@ -72,10 +99,13 @@ public class DingiTelemetry {
                         LocationEvent locationEvent = obtainLocationEvent.createLocationEvent(context.getApplicationContext() , location, "Foreground");
 
 
-                        ArrayList<Event> batch = new ArrayList<>();
+
                         batch.add(locationEvent);
 
-                        sendEvents(batch);
+                        if(batch.size() == 5){
+                            sendEvents(batch);
+                            batch.clear();
+                        }
                         //locationTracker.stopLocationService(context);
                     }
 
@@ -86,6 +116,22 @@ public class DingiTelemetry {
                     }
                 }))
                 .start(context, activity);
+
+                //run in service
+        //.start(context , activity);
+    }
+
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
     }
 
 

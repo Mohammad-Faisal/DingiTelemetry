@@ -12,11 +12,13 @@ public class LocationReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (null != intent && intent.getAction().equals("my.action")) {
+
+        Log.d("Dingi", "I am now in the broadcaster!!!!!");
+        context.startService(new Intent(context, DingiTelemetryService.class));;
+
+        /*if (null != intent && intent.getAction().equals("my.action")) {
             Location locationData = (Location) intent.getParcelableExtra(SettingsLocationTracker.LOCATION_MESSAGE);
             Log.d("Dingi", "Latitude: " + locationData.getLatitude() + "Longitude:" + locationData.getLongitude());
-            //send your call to api or do any things with the of location data
-
-        }
+        }*/
     }
 }

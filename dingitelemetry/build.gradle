@@ -36,6 +36,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:3.11.0"
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "com.google.code.gson:gson:2.8.5"
+    implementation "com.google.android.gms:play-services-location:16.0.0"
 
     implementation 'com.github.safetysystemtechnology:location-tracker-background:v1.3'
 

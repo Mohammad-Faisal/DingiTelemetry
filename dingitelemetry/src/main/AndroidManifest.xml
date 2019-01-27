@@ -9,12 +9,40 @@
 
 
     <application>
+
+
+        <service
+            android:name="com.dingi.sdk.dingitelemetry.DingiTelemetryService"
+            android:enabled="true" >
+        </service>
+
+
+
         <receiver android:name=".LocationReceiver">
             <intent-filter>
-                <action android:name="my.action"/>
+                <action android:name="my.action"
+                    android:enabled="true"
+                    android:exported="true"
+                    android:label="LocationReceiver"
+                    />
             </intent-filter>
         </receiver>
+
+
+
+        <!--
+
+               <receiver
+                   android:name="com.dingi.sdk.dingitelemetry.LocationReceiver"
+                   android:enabled="true"
+                   android:exported="true"
+                   android:label="LocationReceiver">
+               </receiver>
+        -->
+
     </application>
+
+
 
 
 
