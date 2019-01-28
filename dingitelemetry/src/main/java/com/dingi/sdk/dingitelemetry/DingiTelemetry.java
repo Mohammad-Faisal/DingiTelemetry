@@ -73,9 +73,7 @@ public class DingiTelemetry {
 
     private void sendTurnstileEvent(){
         ArrayList<Event> batch = new ArrayList<>();
-        AppUserTurnstile turnstileEvent = new AppUserTurnstile("Dingi",
-                "1.0");
-        AppUserTurnstile appUserTurnstile = new AppUserTurnstile("Dingi" , "1.0");
+        AppUserTurnstile turnstileEvent = new AppUserTurnstile(context , "Dingi", "1.0");
         batch.add(turnstileEvent);
         sendEvents(batch);
     }

@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -178,6 +179,7 @@ public class TelemetryUtils {
         }*/
 
         if (context == null) {
+            Log.d("Telemetry" , "updateVendorId is begin called");
             return updateVendorId(context);
         }
 

@@ -1,6 +1,7 @@
 package com.dingi.sdk.dingitelemetry;
 
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -36,11 +37,11 @@ public class AppUserTurnstile extends Event implements Parcelable {
     @SerializedName("operatingSystem")
     private String operatingSystem = null;
 
-    public AppUserTurnstile(String sdkIdentifier, String sdkVersion) {
+    public AppUserTurnstile(Context context , String sdkIdentifier, String sdkVersion) {
         //checkApplicationContext();
         this.event = APP_USER_TURNSTILE;
         this.created = TelemetryUtils.obtainCurrentDate();
-        this.userId = obtainUniversalUniqueIdentifier();
+        this.userId = TelemetryUtils.retrieveVendorId(context);
         //TelemetryEnabler telemetryEnabler = new TelemetryEnabler(true);
         //this.enabledTelemetry = TELEMETRY_STATES.get(telemetryEnabler.obtainTelemetryState());
         this.enabledTelemetry =true;
