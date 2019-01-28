@@ -93,15 +93,9 @@ public class DingiTelemetry {
                     @Override
                     public void onCurrentLocation(Location location) {
                         Log.d("Dingi", ":onCurrentLocation" + location.getLongitude());
-
-
                         LocationMapper obtainLocationEvent = new LocationMapper();
                         LocationEvent locationEvent = obtainLocationEvent.createLocationEvent(context.getApplicationContext() , location, "Foreground");
-
-
-
                         batch.add(locationEvent);
-
                         if(batch.size() == 5){
                             sendEvents(batch);
                             batch.clear();
@@ -116,7 +110,6 @@ public class DingiTelemetry {
                     }
                 }))
                 .start(context, activity);
-
                 //run in service
         //.start(context , activity);
     }
@@ -133,8 +126,6 @@ public class DingiTelemetry {
         Log.i ("isMyServiceRunning?", false+"");
         return false;
     }
-
-
     public void sendEvents(List<Event> events) {
         telemetryClient.sendEvents(events);
     }

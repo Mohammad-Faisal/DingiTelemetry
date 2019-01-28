@@ -18,6 +18,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.Buffer;
 import timber.log.Timber;
 
 public class TelemetryClient {
@@ -62,9 +63,8 @@ public class TelemetryClient {
                 batch.add(events.get(i));
             }
             Timber.tag("Dingi").d("found a event and the type is %s", events.get(i).obtainType());
+
         }
-
-
         batch.addAll(events);
         if(batch.size()>0)sendBatch(batch);
     }
@@ -72,10 +72,6 @@ public class TelemetryClient {
 
 
     public void sendBatch(List<Event> batch) {
-
-
-        // batch.add("")
-
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -91,29 +87,18 @@ public class TelemetryClient {
                 .scheme(HTTPS_SCHEME);
         builder.host(COM_EVENTS_HOST);
         HttpUrl baseUrl = builder.build();
-
-
-        String dingiMapAccessToken = "EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2";
-
-        //changed here
-        //we added dingiMapAccessToken instead of mapboxAccessToken here into the query parameter
+        //String dingiMapAccessToken = "EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2";
         HttpUrl url = baseUrl.newBuilder(EVENTS_ENDPOINT)
                 .addQueryParameter(ACCESS_TOKEN_QUERY_PARAMETER, dingiMapAccessToken).build();
 
 
         Log.d("Dingi" , "the payload is being sent and the url is "+ url.toString());
-
-
         Request request = new Request.Builder()
                 .url(url)
                 .header(USER_AGENT_REQUEST_HEADER, "normal user agent")
                 .post(body)
                 .build();
-
-
-        Log.d("Dingi" , "the payload is being sent and the body is "+ request.toString());
-
-
+        Log.d("Dingi" , "the payload is being sent and the body is "+ bodyToString(request));
 
         //for using https
         OkHttpClient client = setting.getClient(certificateBlacklist);
@@ -132,17 +117,23 @@ public class TelemetryClient {
                 Timber.tag("Dingi").d("dingi telemetry request has returned and the response is  %s", response.toString());
             }
         });
-
-
-
-
-
-
     }
 
 
     private GsonBuilder configureGsonBuilder() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         return gsonBuilder;
+    }
+
+    private static String bodyToString(final Request request){
+
+        try {
+            final Request copy = request.newBuilder().build();
+            final Buffer buffer = new Buffer();
+            copy.body().writeTo(buffer);
+            return buffer.readUtf8();
+        } catch (final IOException e) {
+            return "did not work";
+        }
     }
 }
