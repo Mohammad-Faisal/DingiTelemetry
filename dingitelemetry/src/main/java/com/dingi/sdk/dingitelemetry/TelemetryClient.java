@@ -50,19 +50,15 @@ public class TelemetryClient {
     void sendEvents(List<Event> events) {
         ArrayList<Event> batch = new ArrayList<>();
 
-
-        //only for turnstile
-        //i filtered out only the turnstile events here
-
         for(int i=0;i<events.size() ; i++){
             if(Event.Type.TURNSTILE.equals(events.get(i).obtainType())){
                 batch.add(events.get(i));
             }
             if(Event.Type.LOCATION.equals(events.get(i).obtainType())){
-                Timber.tag("Dingi").d("found a location event");
+                //Timber.tag("Dingi").d("found a location event");
                 batch.add(events.get(i));
             }
-            Timber.tag("Dingi").d("found a event and the type is %s", events.get(i).obtainType());
+            //Timber.tag("Dingi").d("found a event and the type is %s", events.get(i).obtainType());
 
         }
         batch.addAll(events);
@@ -92,7 +88,7 @@ public class TelemetryClient {
                 .addQueryParameter(ACCESS_TOKEN_QUERY_PARAMETER, dingiMapAccessToken).build();
 
 
-        Log.d("Dingi" , "the payload is being sent and the url is "+ url.toString());
+        //Log.d("Dingi" , "the payload is being sent and the url is "+ url.toString());
         Request request = new Request.Builder()
                 .url(url)
                 .header(USER_AGENT_REQUEST_HEADER, "normal user agent")
@@ -108,13 +104,13 @@ public class TelemetryClient {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d("Dingi" , "dingi telemetry request has returned and the error    is  "+ e.toString());
-                Timber.tag("Dingi").d("dingi telemetry request has returned and the error    is  %s", e.toString());
+                //Timber.tag("Dingi").d("dingi telemetry request has returned and the error    is  %s", e.toString());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.d("Dingi" , "dingi telemetry request has returned and the response    is  "+response.toString());
-                Timber.tag("Dingi").d("dingi telemetry request has returned and the response is  %s", response.toString());
+                //Timber.tag("Dingi").d("dingi telemetry request has returned and the response is  %s", response.toString());
             }
         });
     }

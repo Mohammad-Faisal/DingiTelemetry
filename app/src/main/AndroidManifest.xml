@@ -22,6 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <receiver android:name=".LocationReceiver" android:enabled="false">
+            <intent-filter>
+                <action android:name="my.action"/>
+            </intent-filter>
+        </receiver>
+
+
+
     </application>
 
 </manifest>

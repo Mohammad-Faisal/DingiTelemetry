@@ -1,34 +1,40 @@
 package com.dingi.sdk.dingitelemetryexample;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 
 import com.dingi.dingisdk.Dingi;
 import com.dingi.dingisdk.constants.Style;
 import com.dingi.dingisdk.maps.DingiMap;
 import com.dingi.dingisdk.maps.MapView;
-/*import com.dingi.sdk.dingitelemetry.AppUserTurnstile;
 import com.dingi.sdk.dingitelemetry.DingiTelemetry;
-import com.dingi.sdk.dingitelemetry.Event;*/
-
-import java.util.ArrayList;
 
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
 
-//    private DingiTelemetry telemetry;
     MapView mapView;
     DingiMap map;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Dingi.getInstance(this,this,"EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2");
+        //Dingi.getInstance(getApplicationContext(),this,"EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2");
         setContentView(R.layout.activity_main);
-        mapView = findViewById(R.id.mapView);
+
+
+        DingiTelemetry telemetry = new DingiTelemetry(this , "EjFUMTUMKFcnJ2VzRnL39Cd2ixtHScJ2p0C1vhP2" );
+
+       /* mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
 
@@ -40,13 +46,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mapView.setStyleUrl(Style.DINGI_BANGLA);
+        mapView.setStyleUrl(Style.DINGI_BANGLA);*/
+        //scheduleAlarm();
+
     }
 
+
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    /*@Override
     public void onStart() {
         super.onStart();
         mapView.onStart();
+
     }
 
     @Override
@@ -83,5 +99,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
-    }
+    }*/
 }
