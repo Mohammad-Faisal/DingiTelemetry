@@ -80,8 +80,6 @@ public class DingiTelemetry {
                 .currentLocation(new CurrentLocationReceiver(new CurrentLocationListener() {
                     @Override
                     public void onCurrentLocation(Location location) {
-                        Log.d("Dingi", ":onCurrentLocation longitute is " + location.getLongitude());
-                        Log.d("Dingi", ":onCurrentLocation latitute  is " + location.getLatitude());
                         LocationMapper obtainLocationEvent = new LocationMapper();
                         LocationEvent locationEvent = obtainLocationEvent.createLocationEvent(context.getApplicationContext() , location, "Foreground");
                         batch.add(locationEvent);
@@ -94,7 +92,7 @@ public class DingiTelemetry {
 
                     @Override
                     public void onPermissionDiened() {
-                        Log.d("Dingi", ":onPermissionDiened");
+                        //Log.d("Dingi", ":onPermissionDiened");
                         locationTracker.stopLocationService(context);
                     }
                 }))

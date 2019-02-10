@@ -94,7 +94,7 @@ public class TelemetryClient {
                 .header(USER_AGENT_REQUEST_HEADER, "normal user agent")
                 .post(body)
                 .build();
-        Log.d("Dingi" , "the payload is being sent and the body is "+ bodyToString(request));
+//        Log.d("Dingi" , "the payload is being sent and the body is "+ bodyToString(request));
 
         //for using https
         OkHttpClient client = setting.getClient(certificateBlacklist);
@@ -103,13 +103,13 @@ public class TelemetryClient {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d("Dingi" , "dingi telemetry request has returned and the error    is  "+ e.toString());
+//                Log.d("Dingi" , "dingi telemetry request has returned and the error    is  "+ e.toString());
                 //Timber.tag("Dingi").d("dingi telemetry request has returned and the error    is  %s", e.toString());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d("Dingi" , "dingi telemetry request has returned and the response    is  "+response.toString());
+//                Log.d("Dingi" , "dingi telemetry request has returned and the response    is  "+response.toString());
                 //Timber.tag("Dingi").d("dingi telemetry request has returned and the response is  %s", response.toString());
             }
         });

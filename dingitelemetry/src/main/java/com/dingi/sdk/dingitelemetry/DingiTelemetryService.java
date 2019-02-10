@@ -45,7 +45,7 @@ public class DingiTelemetryService extends Service {
 
 
         super();
-        Log.i("Dingi", "here I am!");
+        //Log.i("Dingi", "here I am!");
 
 
 
@@ -59,7 +59,7 @@ public class DingiTelemetryService extends Service {
     public void onCreate() {
         super.onCreate();
         Context context = getApplicationContext();
-        Log.i("Dingi", "here I am in onCreate of Telemetry Service");
+        //Log.i("Dingi", "here I am in onCreate of Telemetry Service");
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -79,7 +79,7 @@ public class DingiTelemetryService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("Dingi", "ondestroy!");
+        //Log.i("Dingi", "ondestroy!");
         Intent broadcastIntent = new Intent(this, LocationReceiver.class);
         sendBroadcast(broadcastIntent);
     }

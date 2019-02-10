@@ -179,7 +179,7 @@ public class TelemetryUtils {
         }*/
 
         if (context == null) {
-            Log.d("Telemetry" , "updateVendorId is begin called");
+            //Log.d("Telemetry" , "updateVendorId is begin called");
             return updateVendorId(context);
         }
 
